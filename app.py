@@ -38,7 +38,7 @@ def letters_2_words():
     reg = ""
     mins = 3
     maxs = None
-    elif len(wform.avail_letters.data) == 0 and len(wform.pattern.data) == 0:
+    if len(wform.avail_letters.data) == 0 and len(wform.pattern.data) == 0:
         reg = "Please fill out either the pattern or letters section, or both"
         return render_template("index.html", wform=wform, mins=mins, maxs=maxs, reg=reg)
     elif re.search(r'^[a-z]+$', wform.avail_letters.data) == None and len(wform.pattern.data) == 0:
