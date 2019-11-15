@@ -77,18 +77,23 @@ def letters_2_words():
                     word_set.add(w)
 
     return render_template('wordlist.html',
-        wordlist=sorted(word_set),
+        wordlist=sorted(sorted(word_set), key = len),
         name="CS4131")
 
 
 
 
-@app.route('/proxy')
-def proxy():
-    result = requests.get(request.args['url'])
+@app.route('/proxy/<dic>')
+def proxy(dic):
+    result = requests.get("https://www.dictionaryapi.com/api/v3/references/collegiate/json/"+dic+"?0ecd49d6-6fa8-4e24-a31a-d3295cadaac2")
+    if result.status_code == 200:
+        print('Success!')
+        print(result.text)
+    else:
+        print("error")
     resp = Response(result.text)
     resp.headers['Content-Type'] = 'application/json'
-    #print('Url: ' + request.args['url'], file=sys.stdout)
+    #print('Url: '+dic, file=sys.stdout)
     return resp
 
 

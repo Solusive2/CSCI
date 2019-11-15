@@ -5,6 +5,7 @@ main {
 }
 
 .wordbox {
+	position: relative;
     text-align: center;
     border: solid white;
     margin: 3px;

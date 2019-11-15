@@ -3,7 +3,17 @@
 {% block content %}
 <main>
     {% for word in wordlist: %}
-        <div class="wordbox">{{ word }}</div>
+        <div onclick="dict(this)"" class="wordbox">{{ word }}</div>
     {% endfor %}
 </main>
+<script type="text/javascript">
+        async function dict(obj) {
+        	   let init = {
+                    method: 'GET'
+                }
+        	let resp = await fetch("/proxy/" +obj.innerText, init);
+        	let p = await resp;
+        	alert(JSON.stringify(p))
+        }
+</script>
 {% endblock %}
