@@ -38,13 +38,13 @@ def letters_2_words():
     reg = ""
     mins = 3
     maxs = None
-    if len(wform.avail_letters.data) == 0 and len(wform.pattern.data) == 0:
+    if (wform.avail_letters.data == None or len(wform.avail_letters.data) == 0) and (wform.pattern.data == None or len(wform.pattern.data) == 0):
         reg = "Please fill out either the pattern or letters section, or both"
         return render_template("index.html", wform=wform, mins=mins, maxs=maxs, reg=reg)
-    elif re.search(r'^[a-z]+$', wform.avail_letters.data) == None and len(wform.pattern.data) == 0:
+    elif re.search(r'^[a-z]+$', wform.avail_letters.data) == None and (wform.pattern.data == None or len(wform.pattern.data) == 0):
         reg = "Letter field must contain letters only"
         return render_template("index.html", wform=wform, mins=mins, maxs=maxs, reg=reg)
-    elif len(wform.pattern.data) != int(wform.wlen.data) and int(wform.wlen.data) != 0:
+    elif ((wform.pattern.data != None) and len(wform.pattern.data) != 0) and (int(wform.wlen.data) != 0) and (len(wform.pattern.data) != int(wform.wlen.data)):
         reg = "Pattern length is not equal to specified word length"
         return render_template("index.html", wform=wform, mins=mins, maxs=maxs, reg=reg)
     else:
@@ -53,7 +53,7 @@ def letters_2_words():
         good_words = set(x.strip().lower() for x in f.readlines())
     word_set = set()
     if wform.wlen.data == '0':
-        if len(wform.avail_letters.data) == 0 and len(wform.pattern.data) != 0:
+        if (wform.avail_letters.data == None or len(wform.avail_letters.data) == 0) and (wform.pattern.data != None and len(wform.pattern.data) != 0):
             for w in good_words:
                 if re.search('^'+wform.pattern.data+'$', w) != None:
                     word_set.add(w)
@@ -65,7 +65,7 @@ def letters_2_words():
                     if w in good_words and (re.search('^'+wform.pattern.data+'$', w) != None or len(wform.pattern.data) == 0):
                         word_set.add(w)
     else:
-        if len(wform.avail_letters.data) == 0 and len(wform.pattern.data) != 0:
+        if (wform.avail_letters.data == None or len(wform.avail_letters.data) == 0) and (wform.pattern.data != None and len(wform.pattern.data) != 0):
             for w in good_words:
                 if re.search('^'+wform.pattern.data+'$', w) != None and len(w)== int(wform.wlen.data):
                     word_set.add(w)

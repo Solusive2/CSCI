@@ -23,7 +23,7 @@
     		b.then(function (g) {
     				var u = g; 
     				//obj.innerHTML = 
-        	///console.log(JSON.stringify(u[0].def))//[0].sseq[0][0][1].dt))
+        	//console.log(u)//[0].sseq[0][0][1].dt))
         	
         	var head = document.querySelector("#title");
         	head.innerHTML = "Definition of:  " + obj.innerText
@@ -34,30 +34,63 @@
         	cont.style.visibility="visible";
         	//head.style.visibility= "visible";
         	//pop.style.visibility= "visible";
+        	if(u.length == 20){
+        		var li = document.createElement("p");
+        		li.innerHTML = "Definition not Found";
+        		list.appendChild(li);
+        		li.classList.add("def");
+
+        		li = document.createElement("p");
+        		li.innerHTML = "Similar Words:";
+        		list.appendChild(li);
+        		li.classList.add("def");
+        		for (var i = 0; i < 20; i++) {
+        		li = document.createElement("li");
+        		li.innerHTML = u[i];
+        		list.appendChild(li);
+        		li.classList.add("def");
+        		}
+        		return
+        	}
+        	if (typeof u[0].def === 'undefined'){
+        		var li = document.createElement("li");
+        		li.innerHTML = "Error occured while finding Definition";
+        		list.appendChild(li);
+        		li.classList.add("def");
+        		return
+        	}
 
         	u = JSON.stringify(u[0].def)
         	//var u = u.replace(" ", "W3Schools");
-        	var loc = u.search('"text","')
+        	var loc = u.search('"sense",{')
         	//alert(loc)
-        	u = u.slice(loc+8)
+        	u = u.slice(loc+9)
         	//alert(u)
-        	while(u.search('"text","') != -1){
-        		var loc = u.search('"text","')
+        	while(u.search('"sense",{') != -1){
+        		var loc = u.search('"sense",{')
         		var temp = u.slice(0,loc)
         		//alert(temp)
+        		temp = temp.slice(temp.search('"text","')+8)
         		temp = temp.slice(0,temp.search('"'))
         		//temp = temp.replace(/^{}$/g,"")
-        		if(temp.search('{dx_def}') != -1){
-        		  var x1 = temp.slice(0,temp.search(0,'{dx_def}'))
+        		if(temp.search("{dx_def}") != -1){
+        		  var x1 = temp.slice(0,temp.search('{dx_def}'))
         		  temp = x1 + temp.slice(temp.search('{/dx_def}')+9)
+        		}
+
+        		if(temp.search("{d_link") != -1){
+        		  var x1 = temp.slice(0,temp.search('{d_link'))
+        		  temp = temp.slice(temp.search('{d_link')+8)
+        		  temp = x1 + temp.slice(temp.search(/\|/)+1)
         		}
         		temp = temp.replace(/:1}/g,"")
         		temp = temp.replace(/{bc}/g,"")
         		temp = temp.replace(/{wi}/g,"")
-        		temp = temp.replace(/{wi\/}/g,"")
-        		temp = temp.replace(/{wi\/}/g,"")
-        		temp = temp.replace(/{d_link/g,"")
-        		temp = temp.replace(/{sx/g,"")
+        		temp = temp.replace(/{wi\\\/}/g,"")
+        		temp = temp.replace(/{wi\\\/}/g,"")
+        		temp = temp.replace(/{sx\|/g,"(")
+        		temp = temp.replace(/\|\|}/g,")")
+        		temp = temp.replace(/\|\|/g,")")
         		temp = temp.replace(/{/g,"")
         		temp = temp.replace(/}/g,"")
         
@@ -66,31 +99,42 @@
         		li.innerHTML = temp;
         		list.appendChild(li);
         		li.classList.add("def");
-        			
-        		u = u.slice(loc+8)
+
+        		u = u.slice(loc+9)
         	}
-        		var temp = u.slice(0,loc+8)
+        		//var temp = u.slice(0,loc+8)
+        		var temp = u
         		//alert(temp)
+        		temp = temp.slice(temp.search('"text","')+8)
         		temp = temp.slice(0,temp.search('"'))
-        		temp = temp.replace(/^{}$/g,"")
-        		if(temp.search('{dx_def}') != -1){
-        		  var x1 = temp.slice(0,temp.search(0,'{dx_def}'))
+        		//temp = temp.replace(/^{}$/g,"")
+        		if(temp.search("{dx_def}") != -1){
+        		  var x1 = temp.slice(0,temp.search('{dx_def}'))
         		  temp = x1 + temp.slice(temp.search('{/dx_def}')+9)
+        		}
+
+        		if(temp.search("{d_link") != -1){
+        		  var x1 = temp.slice(0,temp.search('{d_link'))
+        		  temp = temp.slice(temp.search('{d_link')+8)
+        		  temp = x1 + temp.slice(temp.search(/\|/)+1)
         		}
         		temp = temp.replace(/:1}/g,"")
         		temp = temp.replace(/{bc}/g,"")
         		temp = temp.replace(/{wi}/g,"")
-        		temp = temp.replace(/{wi\/}/g,"")
-        		temp = temp.replace(/{wi\/}/g,"")
-        		temp = temp.replace(/{d_link/g,"")
-        		temp = temp.replace(/{sx/g,"")
+        		temp = temp.replace(/{wi\\\/}/g,"")
+        		temp = temp.replace(/{wi\\\/}/g,"")
+        		temp = temp.replace(/{sx\|/g,"(")
+        		temp = temp.replace(/\|\|}/g,")")
+        		temp = temp.replace(/\|\|/g,")")
         		temp = temp.replace(/{/g,"")
         		temp = temp.replace(/}/g,"")
+        
+
         		var li = document.createElement("li");
         		li.innerHTML = temp;
-        		li.classList.add("def");
         		list.appendChild(li);
-
+        		li.classList.add("def");
+  
         	})
     		})
         }
