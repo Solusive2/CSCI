@@ -12,7 +12,7 @@ class WordForm(FlaskForm):
     avail_letters = StringField("Letters")#, validators= [
    #     Regexp(r'^[a-z]+$', message="must contain letters only")
     #])
-    pattern = StringField("pattern")
+    pattern = StringField("Pattern")
     wlen = SelectField(u'Word Length', choices=[('0', 'Unspecified'),('3', '3'), ('4', '4'), ('5', '5'), ('6', '6'), ('7', '7'), ('8', '8'), ('9', '9'), ('10', '10')])
     
     submit = SubmitField("Go")
@@ -42,10 +42,10 @@ def letters_2_words():
         reg = "Please fill out either the pattern or letters section, or both"
         return render_template("index.html", wform=wform, mins=mins, maxs=maxs, reg=reg)
     elif re.search(r'^[a-z]+$', wform.avail_letters.data) == None and len(wform.pattern.data) == 0:
-        reg = "must contain letters only"
+        reg = "Letter field must contain letters only"
         return render_template("index.html", wform=wform, mins=mins, maxs=maxs, reg=reg)
     elif len(wform.pattern.data) != int(wform.wlen.data) and int(wform.wlen.data) != 0:
-        reg = "pattern length is not equal to specified word length"
+        reg = "Pattern length is not equal to specified word length"
         return render_template("index.html", wform=wform, mins=mins, maxs=maxs, reg=reg)
     else:
         letters = wform.avail_letters.data
@@ -61,7 +61,7 @@ def letters_2_words():
             for l in range(3,len(letters)+1):
                 for word in itertools.permutations(letters,l):
                     w = "".join(word)
-                    print('Url: ' + wform.pattern.data, file=sys.stdout)
+                    #print('Url: ' + wform.pattern.data, file=sys.stdout)
                     if w in good_words and (re.search('^'+wform.pattern.data+'$', w) != None or len(wform.pattern.data) == 0):
                         word_set.add(w)
     else:
@@ -72,7 +72,7 @@ def letters_2_words():
         else:
             for word in itertools.permutations(letters,int(wform.wlen.data)):
                 w = "".join(word)
-                print('Url: ' + wform.pattern.data, file=sys.stdout)
+               # print('Url: ' + wform.pattern.data, file=sys.stdout)
                 if w in good_words and (re.search('^'+wform.pattern.data+'$', w) != None or len(wform.pattern.data) == 0):
                     word_set.add(w)
 
@@ -85,12 +85,8 @@ def letters_2_words():
 
 @app.route('/proxy/<dic>')
 def proxy(dic):
-    result = requests.get("https://www.dictionaryapi.com/api/v3/references/collegiate/json/"+dic+"?0ecd49d6-6fa8-4e24-a31a-d3295cadaac2")
-    if result.status_code == 200:
-        print('Success!')
-        print(result.text)
-    else:
-        print("error")
+    result = requests.get("https://www.dictionaryapi.com/api/v3/references/collegiate/json/"+dic+"?key=0ecd49d6-6fa8-4e24-a31a-d3295cadaac2")
+
     resp = Response(result.text)
     resp.headers['Content-Type'] = 'application/json'
     #print('Url: '+dic, file=sys.stdout)

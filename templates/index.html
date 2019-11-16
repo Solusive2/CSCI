@@ -1,25 +1,21 @@
 {% extends "base.html" %}
 {% from "_formhelpers.html" import render_field %}
 {% block content %}
-	<script type="text/javascript">
-            async function getxkcd() {
-                let init = {
-                    mode: 'cors',
-                    method: 'GET',
-                }
-                //let resp = await fetch("https://xkcd.com/353/info.0.json", init);
-                let resp = await fetch("/xkcd/353", init);
-                return resp.json();
-            }
-    </script>
-    <h1>Word Finder</h1>
+<div align="center">
+    <br>
+    <br>
     <form action="/words" method="post">
         {{ wform.hidden_tag() }}
         {{ render_field(wform.avail_letters) }}
         <br>
+        <br>
+        <br>
         {{ render_field(wform.pattern)}}
         <br>
+        <br>
+        <br>
         {{ render_field(wform.wlen) }}
+        <br>
         <br />
         {{wform.submit()}}
         <br>
@@ -28,6 +24,10 @@
         <ul class=errors>
         <li class="error">{{ reg }}</li>
         </ul>
+        <br>
+        <br>
+        <br>
         {% endif %}
     </form>
+</div>
 {% endblock %}

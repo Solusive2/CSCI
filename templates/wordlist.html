@@ -1,19 +1,98 @@
 {% extends "base.html" %}
-
 {% block content %}
-<main>
+<div id = "cont" onclick="getElementById('cont').style.visibility = 'hidden'" class = "out">
+		<h2 id = "title" class ="up">Definition</h2>
+		<br>
+		<ul id = "pop" class ="up">		
+		</ul>
+</div>
+<main class="meh">
     {% for word in wordlist: %}
-        <div onclick="dict(this)"" class="wordbox">{{ word }}</div>
+        <div onclick="dict(this)" class="wordbox">{{ word }}</div>
     {% endfor %}
 </main>
 <script type="text/javascript">
+
         async function dict(obj) {
         	   let init = {
                     method: 'GET'
                 }
-        	let resp = await fetch("/proxy/" +obj.innerText, init);
-        	let p = await resp;
-        	alert(JSON.stringify(p))
+        	let resp = fetch("/proxy/" +obj.innerText, init);
+        	resp.then(function (w) {
+    		var b = w.json();
+    		b.then(function (g) {
+    				var u = g; 
+    				//obj.innerHTML = 
+        	///console.log(JSON.stringify(u[0].def))//[0].sseq[0][0][1].dt))
+        	
+        	var head = document.querySelector("#title");
+        	head.innerHTML = "Definition of:  " + obj.innerText
+        	var list = document.querySelector("#pop");
+        	pop.innerHTML = ""
+
+        	var cont = document.querySelector("#cont");
+        	cont.style.visibility="visible";
+        	//head.style.visibility= "visible";
+        	//pop.style.visibility= "visible";
+
+        	u = JSON.stringify(u[0].def)
+        	//var u = u.replace(" ", "W3Schools");
+        	var loc = u.search('"text","')
+        	//alert(loc)
+        	u = u.slice(loc+8)
+        	//alert(u)
+        	while(u.search('"text","') != -1){
+        		var loc = u.search('"text","')
+        		var temp = u.slice(0,loc)
+        		//alert(temp)
+        		temp = temp.slice(0,temp.search('"'))
+        		//temp = temp.replace(/^{}$/g,"")
+        		if(temp.search('{dx_def}') != -1){
+        		  var x1 = temp.slice(0,temp.search(0,'{dx_def}'))
+        		  temp = x1 + temp.slice(temp.search('{/dx_def}')+9)
+        		}
+        		temp = temp.replace(/:1}/g,"")
+        		temp = temp.replace(/{bc}/g,"")
+        		temp = temp.replace(/{wi}/g,"")
+        		temp = temp.replace(/{wi\/}/g,"")
+        		temp = temp.replace(/{wi\/}/g,"")
+        		temp = temp.replace(/{d_link/g,"")
+        		temp = temp.replace(/{sx/g,"")
+        		temp = temp.replace(/{/g,"")
+        		temp = temp.replace(/}/g,"")
+        
+
+        		var li = document.createElement("li");
+        		li.innerHTML = temp;
+        		list.appendChild(li);
+        		li.classList.add("def");
+        			
+        		u = u.slice(loc+8)
+        	}
+        		var temp = u.slice(0,loc+8)
+        		//alert(temp)
+        		temp = temp.slice(0,temp.search('"'))
+        		temp = temp.replace(/^{}$/g,"")
+        		if(temp.search('{dx_def}') != -1){
+        		  var x1 = temp.slice(0,temp.search(0,'{dx_def}'))
+        		  temp = x1 + temp.slice(temp.search('{/dx_def}')+9)
+        		}
+        		temp = temp.replace(/:1}/g,"")
+        		temp = temp.replace(/{bc}/g,"")
+        		temp = temp.replace(/{wi}/g,"")
+        		temp = temp.replace(/{wi\/}/g,"")
+        		temp = temp.replace(/{wi\/}/g,"")
+        		temp = temp.replace(/{d_link/g,"")
+        		temp = temp.replace(/{sx/g,"")
+        		temp = temp.replace(/{/g,"")
+        		temp = temp.replace(/}/g,"")
+        		var li = document.createElement("li");
+        		li.innerHTML = temp;
+        		li.classList.add("def");
+        		list.appendChild(li);
+
+        	})
+    		})
         }
 </script>
 {% endblock %}
