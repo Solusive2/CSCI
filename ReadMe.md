@@ -57,34 +57,34 @@ Gets the specified user, checks if they exist and other errors, and updates the 
 ### **_post.html**
 html to generate a post, including the post's content, as well as the author's avatar and username.
 
-### **404.html**
-An error message for when something isn't found or is not the database.
+* ### **404.html**
+  * An error message for when something isn't found or is not the database.
 
-### **500.html**
-An error message for an unspecified error.
+* ### **500.html**
+  * An error message for an unspecified error.
 
-### **base.html**
-Contains the navbar which allows a user to access other routes, also displays flashed messages.
+* ### **base.html**
+  * Contains the navbar which allows a user to access other routes, also displays flashed messages.
 
-### **edit_profile.html**
+* ### **edit_profile.html**
 Allows user to submit for to edit their account.
 
-### **index.html**
+* ### **index.html**
 Greets the user and displays posts, if a route allows it also allows a user to submit posts.
 
-### **login.html**
+* ### **login.html**
 Allows the user to sign it and provides links for a user to register or reset their password.
 
-### **register.html**
+* ### **register.html**
 Allows the user to submit a registration form to create an account.
 
-### **reset_password.html**
+* ### **reset_password.html**
 Page generated after a reset request, it allows the user to submit a form to reset their password.
 
-### **reset_password_request.html**
+* ### **reset_password_request.html**
 Page that allows the user to fill in a form for a password reset request.
 
-### **user.html**
+* ### **user.html**
 Page displaying a user profile and that user's information. Allows a user to follow/unfollow other users or see the posts, as well as allowing a user to edit their profile.
 
 
@@ -97,25 +97,25 @@ id, user_id, follower_id, and followed_id are all the same. They are the associa
 	
 
 ### **User Table Rows**
-* *id
+* id
 * username
 * email
-* password_hash*
+* password_hash
 
 Table of the user and their login details, username, and an id.
 
 ### **Post Table Rows**
-* *id
+* id
 * body
 * timestamp
-* user_id*
+* user_id
 
 table that stores the content of a post, who posted it, and when. Each post also has its own id
 
 ### **Follower Table Rows**
 
-* *follower_id
-* followed_id*
+* follower_id
+* followed_id
 
 A table representing a many to many relationship between users and other users. Specifically who is following who.
 
