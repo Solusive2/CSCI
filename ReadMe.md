@@ -110,7 +110,7 @@ This table contains user information. The columns contain their login details su
 * timestamp
 * user_id
 
-This Table stores the content and details of a post. The columns contain who posted it, when it was posted, and what the post contains. Each post also has its own id
+This table stores the content and details of a post. The columns contain who posted it, when it was posted, and what the post contains. Each post also has its own id
 
 ### **Follower Table**
 
@@ -123,5 +123,5 @@ A table representing a many to many relationship between users and other users. 
 
 ## **References/Resources:**
 
-From tutorial by Miguel Grinberg:   
+From a tutorial by Miguel Grinberg:   
 	https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world
